@@ -155,7 +155,7 @@ done
 
 shift $((OPTIND-1))
 
-folder=$(find . -type d -name "${component}s")
+folder=$(find . -not -path "./node_modules/*" -type d -name "${component}s")
 if [[ $folder == "" ]]; then folder="."; fi
 
 if [[ $language == $JS ]]; then component_language=$JSX
