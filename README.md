@@ -4,6 +4,12 @@ Bash script to create React components (or component pages) with a single comman
 
 # Usage
 
+- Add executable permissions to the script
+```bash
+  $ chmod +x react_scaffold.sh
+```
+
+- Run the script
 ```bash
   $ ./react_scaffold.sh [flags] <ComponentOne> <ComponentTwo> ...
 ```
@@ -23,3 +29,11 @@ Bash script to create React components (or component pages) with a single comman
 ```bash
   $ ./react_scaffold.sh -p -s sass -l js ComponentOne ComponentTwo
 ```
+
+# Notes
+
+- It is recomended to remove the extension of the script file (`react_scaffold.sh -> react_scaffold`) and move it to
+  `/usr/bin`, `/usr/local/bin` or any other directory in your PATH variable to access it from anywhere in your system.
+
+- By default, the script will create a component in the first `components` or `pages` directory it finds recursively
+  from the current location. The option to select a specific directory will be added in the future.
