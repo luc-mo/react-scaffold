@@ -21,7 +21,7 @@ Bash script to create React components (or component pages) with a single comman
 | -h, --help | Show help | - | - |
 | -c, --component | Create a component instead of a component page | - | component |
 | -p, --page | Create a component page instead of a normal component | - | component |
-| -s, --styles | Select styles file | css, scss, sass, styled | styled |
+| -s, --styles | Select styles file | css, scss, sass, styled, stitches | styled |
 | -l, --language | Select language | js, ts | ts |
 
 # Examples

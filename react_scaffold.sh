@@ -12,7 +12,8 @@ declare -r CSS="css"
 declare -r SASS="sass"
 declare -r SCSS="scss"
 declare -r STYLED="styled"
-declare -r STYLES=($CSS $SASS $SCSS $STYLED)
+declare -r STITCHES="stitches"
+declare -r STYLES=($CSS $SASS $SCSS $STYLED $STITCHES)
 
 # Names
 declare -r COMPONENT="component"
@@ -162,7 +163,7 @@ if [[ $language == $JS ]]; then component_language=$JSX
 elif [[ $language == $TS ]]; then component_language=$TSX
 fi
 
-if [[ $style == $STYLED ]]; then style_language=$language
+if [[ $style == $STYLED || $style == $STITCHES ]]; then style_language=$language
 else style_language=$style; fi
 
 function scaffold_index() {
@@ -171,7 +172,7 @@ function scaffold_index() {
   local index_file=$3
   local style=$4
   echo -e "export * from './$name.$component';" > "$index_file"
-  if [[ $style == $STYLED ]]; then echo -e "export * as ${name}Styles from './$name.$STYLE'" >> "$index_file"; fi
+  if [[ $style == $STYLED || $style == $STITCHES ]]; then echo -e "export * as ${name}Styles from './$name.$STYLE'" >> "$index_file"; fi
 }
 
 function scaffold_styles() {
@@ -181,6 +182,9 @@ function scaffold_styles() {
   if [[ $style == $STYLED ]]; then
     echo -e "import styled from 'styled-components';" > "$styles_file"
     echo -e "\nexport const ${name} = styled.div\`\`;" >> "$styles_file"
+  elif [[ $style == $STITCHES ]]; then
+    echo -e "import { styled } from '@stitches/react';" > "$styles_file"
+    echo -e "\nexport const ${name} = styled('button', {});" >> "$styles_file"
   fi
 }
 
@@ -194,7 +198,7 @@ function scaffold_component() {
   if [[ $language == $TS ]]; then echo -e "import { FC, ReactElement } from 'react';" > "$component_file"; fi
   
   # Styles import
-  if [[ $style == $STYLED ]]; then echo -e "import * as S from './$name.$STYLE';\n" >> "$component_file";
+  if [[ $style == $STYLED || $style == $STITCHES ]]; then echo -e "import * as S from './$name.$STYLE';\n" >> "$component_file";
   else echo -e "import './$name.$STYLE.$style';\n" >> "$component_file"; fi
 
   # Component declaration
@@ -202,7 +206,7 @@ function scaffold_component() {
   elif [[ $language == $TS ]]; then echo -e "export const $name: FC = (): ReactElement => {" >> "$component_file"; fi
 
   # Component return
-  if [[ $style == $STYLED ]]; then echo -e "\treturn <S.$name></S.$name>;" >> "$component_file";
+  if [[ $style == $STYLED || $style == $STITCHES ]]; then echo -e "\treturn <S.$name></S.$name>;" >> "$component_file";
   else echo -e "\treturn <div></div>;" >> "$component_file"; fi
 
   # Component closing
